@@ -1,0 +1,10 @@
+C:\Users\nguye\OneDrive\Desktop\GameCaro\bin\Debug\GameCaro.exe.config
+C:\Users\nguye\OneDrive\Desktop\GameCaro\bin\Debug\GameCaro.exe
+C:\Users\nguye\OneDrive\Desktop\GameCaro\bin\Debug\GameCaro.pdb
+C:\Users\nguye\OneDrive\Desktop\GameCaro\obj\Debug\GameCaro.csproj.AssemblyReference.cache
+C:\Users\nguye\OneDrive\Desktop\GameCaro\obj\Debug\GameCaro.Form1.resources
+C:\Users\nguye\OneDrive\Desktop\GameCaro\obj\Debug\GameCaro.Properties.Resources.resources
+C:\Users\nguye\OneDrive\Desktop\GameCaro\obj\Debug\GameCaro.csproj.GenerateResource.cache
+C:\Users\nguye\OneDrive\Desktop\GameCaro\obj\Debug\GameCaro.csproj.CoreCompileInputs.cache
+C:\Users\nguye\OneDrive\Desktop\GameCaro\obj\Debug\GameCaro.exe
+C:\Users\nguye\OneDrive\Desktop\GameCaro\obj\Debug\GameCaro.pdb
