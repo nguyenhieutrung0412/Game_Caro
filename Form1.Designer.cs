@@ -58,7 +58,6 @@ namespace GameCaro
             this.pnChess.Name = "pnChess";
             this.pnChess.Size = new System.Drawing.Size(693, 489);
             this.pnChess.TabIndex = 0;
-       
             // 
             // panel2
             // 
@@ -79,7 +78,6 @@ namespace GameCaro
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
-
             // 
             // panel3
             // 
@@ -94,7 +92,6 @@ namespace GameCaro
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(321, 239);
             this.panel3.TabIndex = 0;
-
             // 
             // label1
             // 
@@ -123,6 +120,7 @@ namespace GameCaro
             this.btnLan.TabIndex = 3;
             this.btnLan.Text = "LAN";
             this.btnLan.UseVisualStyleBackColor = true;
+            this.btnLan.Click += new System.EventHandler(this.btnLan_Click);
             // 
             // txbIP
             // 
@@ -146,7 +144,6 @@ namespace GameCaro
             this.txbName.ReadOnly = true;
             this.txbName.Size = new System.Drawing.Size(172, 22);
             this.txbName.TabIndex = 0;
-         
             // 
             // tmcountdown
             // 
@@ -161,9 +158,10 @@ namespace GameCaro
             this.quitToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1044, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1044, 30);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
             // newGameToolStripMenuItem
             // 
@@ -199,7 +197,8 @@ namespace GameCaro
             this.Name = "Form1";
             this.Text = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
-  
+            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Shown += new System.EventHandler(this.Form1_Shown);
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel3.ResumeLayout(false);

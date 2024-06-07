@@ -20,8 +20,8 @@ namespace GameCaro
         private Stack<PlayInfo> playTimeLine;
 
 
-        private event EventHandler playerMarked;
-        public event EventHandler PlayerMarked
+        private event EventHandler<ButtonClickEvent> playerMarked;
+        public event EventHandler<ButtonClickEvent> PlayerMarked
         {
             add
             {
@@ -124,15 +124,29 @@ namespace GameCaro
             ChangeLayer();
             if (playerMarked != null)
             {
-                playerMarked(this, new EventArgs());
+                playerMarked(this, new ButtonClickEvent(getChessPoint(btn)));
             }
             if ( isEndGame(btn))
             {
                 endGame();
             } 
-            
-           
+        }
+        public void OtherPlayerMark(Point point)
+        {
+            Button btn = Matrix[point.Y][point.X];
 
+            if (btn.BackgroundImage != null)
+             
+                return;
+            Mark(btn);
+            PlayTimeLine.Push(new PlayInfo(getChessPoint(btn), CurrentPlayer));
+            CurrentPlayer = CurrentPlayer == 1 ? 0 : 1;
+            ChangeLayer();
+           
+            if (isEndGame(btn))
+            {
+                endGame();
+            }
         }
         public void endGame()
         {
@@ -316,5 +330,17 @@ namespace GameCaro
         #endregion
         // kiểm tra sự kiện click để đếm ngược
 
+    }
+
+    public class ButtonClickEvent:EventArgs
+    {
+        private Point clickPoint;
+
+
+        public Point ClickPoint { get => clickPoint; set => clickPoint = value; }
+        public ButtonClickEvent(Point point)
+        {
+            this.clickPoint = point;
+        }
     }
 }
