@@ -44,7 +44,7 @@ namespace GameCaro
             tmcountdown.Stop();
             pnChess.Enabled = false;
             undoToolStripMenuItem.Enabled = false;
-            MessageBox.Show("Kết thúc game");
+            //MessageBox.Show("Kết thúc game");
         }
         private void ChessBoard_PlayerMarked(object sender, ButtonClickEvent e)
         {
@@ -52,6 +52,7 @@ namespace GameCaro
             pnChess.Enabled = false;
             prbarCountDown.Value = 0;
             socket.Send(new SocketData((int)SocketData.SocketCommand.SEND_POINT,"", e.ClickPoint));
+            undoToolStripMenuItem.Enabled = false;
 
             Listen();
         }
@@ -59,6 +60,7 @@ namespace GameCaro
         private void ChessBoard_EndedGame(object sender, EventArgs e)
         {
             EndGame();
+            socket.Send(new SocketData((int)SocketData.SocketCommand.END_GAME, "", new Point()));
         }
 
         private void tmcountdown_Tick(object sender, EventArgs e)
@@ -68,13 +70,28 @@ namespace GameCaro
             {
                
                 EndGame();
-               
+                socket.Send(new SocketData((int)SocketData.SocketCommand.TIME_OUT, "", new Point()));
+
             }    
         }
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (MessageBox.Show("Bạn có chắc muốn thoát game không?", "Thông Báo", MessageBoxButtons.OKCancel) != System.Windows.Forms.DialogResult.OK)
-                e.Cancel = true;
+            { 
+                e.Cancel = true; 
+            }
+            else
+            {
+                try
+                {
+                    socket.Send(new SocketData((int)SocketData.SocketCommand.QUIT, "", new Point()));
+                }
+                catch
+                {
+
+                }
+                
+            }
 
         }
         void NewGame()
@@ -93,6 +110,7 @@ namespace GameCaro
         void undo()
         {
             chessBoard.Undo();
+            prbarCountDown.Value = 0;
         }
 
       
@@ -110,6 +128,8 @@ namespace GameCaro
         private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
         {
             NewGame();
+            socket.Send(new SocketData((int)SocketData.SocketCommand.NEWGAME, "", new Point()));
+            pnChess.Enabled = true;
         }
 
         private void btnLan_Click(object sender, EventArgs e)
@@ -175,7 +195,12 @@ namespace GameCaro
                     MessageBox.Show(data.Message);
                     break;
                 case (int)SocketData.SocketCommand.NEWGAME:
-                    MessageBox.Show(data.Message);
+                    this.Invoke((MethodInvoker)(() =>
+                    {
+                        NewGame();
+                        pnChess.Enabled = false;
+                    }));
+                    
                     break;
                 case (int)SocketData.SocketCommand.SEND_POINT:
                     this.Invoke((MethodInvoker)(() =>
@@ -184,15 +209,24 @@ namespace GameCaro
                         pnChess.Enabled = true;
                         tmcountdown.Start();
                         chessBoard.OtherPlayerMark(data.Point);
+                        undoToolStripMenuItem.Enabled = true;
                     }));
                
                    
                     break;
                 case (int)SocketData.SocketCommand.UNDO:
-                    MessageBox.Show(data.Message);
+                    undo();
+                    prbarCountDown.Value = 0;
+                    break;
+                case (int)SocketData.SocketCommand.END_GAME:
+                    MessageBox.Show("Kết thúc game");
+                    break;
+                case (int)SocketData.SocketCommand.TIME_OUT:
+                    MessageBox.Show("Hết giờ");
                     break;
                 case (int)SocketData.SocketCommand.QUIT:
-                    MessageBox.Show(data.Message);
+                    tmcountdown.Stop();
+                    MessageBox.Show("Người chơi đã thoát");
                     break;
                 default:
                     break;

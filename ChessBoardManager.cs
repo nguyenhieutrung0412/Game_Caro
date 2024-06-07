@@ -161,15 +161,28 @@ namespace GameCaro
             if(PlayTimeLine.Count <= 0)
             {
                 return false;
-            }    
+            }
+            bool isUndo1 = UndoAStep();
+            bool isUndo2 = UndoAStep();
+            PlayInfo oldPoint = PlayTimeLine.Peek();
+            currentPlayer = oldPoint.Currentplayer == 1 ? 0 : 1;
+            
+            return isUndo1 && isUndo2;
+        }
+        public bool UndoAStep()
+        {
+            if (PlayTimeLine.Count <= 0)
+            {
+                return false;
+            }
             PlayInfo oldPoint = PlayTimeLine.Pop();
             Button btn = Matrix[oldPoint.Point.Y][oldPoint.Point.X];
 
             btn.BackgroundImage = null;
 
-            
-         
-             if(PlayTimeLine.Count <= 0)
+
+
+            if (PlayTimeLine.Count <= 0)
             {
                 currentPlayer = 0;
             }
